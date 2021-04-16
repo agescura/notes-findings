@@ -1,5 +1,8 @@
 # Dependency Injection Principles, Practices and Patterns
 
+## All examples are in Swift Language
+#
+
 ## The basics of Dependency Injection: What, why and how
 
  * Dependency Injection is a set of software design principles and patterns that enables you to develop loosely coupled code.  
@@ -28,7 +31,7 @@ let salutation = Salutation(writer)
 salutation.exclaim()
 ```
 
-* Salutation class encapsulates the main application logic
+* The Salutation class encapsulates the main application logic
 
  ```swift
 class Salutation {
@@ -40,7 +43,7 @@ class Salutation {
     }
     
     func exclaim() {
-        writer.write("Hello DI")
+        writer.write("Hello DI!")
     }
 }
 ```
@@ -61,7 +64,7 @@ class ConsoleMessageWriter: MessageWriter {
 }
 ```
 
-* ConsoleMessageWriter class implements MessageWriter by wrapping print from Swift Standard Library.
+* The ConsoleMessageWriter class implements MessageWriter by wrapping print from Swift Standard Library.
 
 #### Benefits of DI
 
@@ -72,6 +75,8 @@ class ConsoleMessageWriter: MessageWriter {
 * Testability. Classes can be unit tested.
 
 #### Extensibility example
+
+* Successful software must be able to change. You'll need to add new features and extend existing features. Loose coupling lets you efficiently recompose the application.
 
 ```swift
 class SecureMessageWriter: MessageWriter {
@@ -117,3 +122,85 @@ let salutation = Salutation(
 )
 salutation.exclaim()
 ```
+
+#### Parallel Development
+
+* Separation of concerns makes it possible to develop code in parallel.
+* A module is a group of logically related classes (or components), where a module is independent of and interchangeable with other modules.
+
+#### Maintainability
+
+* Single Responsability Principle
+* Open Close Principle
+
+#### Testability
+
+* An application is considered testable when it can be unit tested.
+* Unit tests provide rapid feedback on the state of an application.
+* Tests isolated from its dependencies.
+* Legacy application as any application that isn't covered by unit tests. Michael Feathers.
+* Liskov Substitution Principle.
+
+```swift
+import XCTest
+@testable import DependencyInjection
+
+class DependencyInjectionTests: XCTestCase {
+
+    func test_exclaimWillWriteCorrectMessageToMessageWriter() {
+        let writer = SpyMessageWriter()
+        let sut = Salutation(writer: writer)
+        sut.exclaim()
+        XCTAssertEqual(
+            "Hello DI!",
+            writer.writtenMessage)
+    }
+
+    private class SpyMessageWriter: MessageWriter {
+        var writtenMessage = ""
+        
+        func write(_ message: String) {
+            writtenMessage = message
+        }
+    }
+}
+```
+
+
+ #### DI Scope
+
+* Classes shouldn't have to deal with the creation of their dependencies.
+* Object Composition: a class also loses the ability to control the lifetime of the object.
+* Object Composition, Interception and lifetime management are three dimensions of DI.
+* Dependency Injection or Inversion of Control?
+
+##### Object LifeTime
+
+```swift
+let writer1 = ConsoleMessageWriter()
+let writer2 = ConsoleMessageWriter()
+        
+let salutation = Salutation(writer: writer1)
+let valediction = Valediction(writer: writer2)
+```
+
+```swift
+let writer = ConsoleMessageWriter()
+        
+let salutation = Salutation(writer: writer)
+let valediction = Valediction(writer: writer)
+```
+
+* Because dependencies can be shared, a single consumer can't possibly control its lifetime.
+* When dependencies implements a disposable protocol, things become much more complicated.
+
+#### Interception
+
+* Interception is an application of the decorator design pattern.
+
+### Summary
+
+* DI is nothing more than a collection of design principles and patterns. It's more about a way of thinking and designing code than it is about tools and techniques.
+* The purpose of DI is to make code maintainable.
+
+## Writing tightly coupled code
