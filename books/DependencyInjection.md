@@ -204,3 +204,5 @@ let valediction = Valediction(writer: writer)
 * The purpose of DI is to make code maintainable.
 
 ## Writing tightly coupled code
+
+* An example that implements a data layer (is a database), a domain layer (logic cases) and a UI Layer (mvc pattern).
