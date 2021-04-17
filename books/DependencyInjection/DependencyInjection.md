@@ -206,3 +206,7 @@ let valediction = Valediction(writer: writer)
 ## Writing tightly coupled code
 
 * An example that implements a data layer (is a database), a domain layer (logic cases) and a UI Layer (mvc pattern).
+* In TightlyCoupled folder we have an example.
+* What happens if we want to change the data access layer? UI has a direct dependency on the data acces layer.
+
+## Writing loosely coupled code
