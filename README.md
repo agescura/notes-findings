@@ -10,4 +10,5 @@ Summary of books and articles read and other interesting resources
 
 * [The Start-Up Trap by Robert C. Martin] (https://blog.cleancoder.com/uncle-bob/2013/03/05/TheStartUpTrap.html)
 
-
+## own self
+* [Machine Learning in iOS: Cats and Dogs] (https://agilescura.medium.com/machine-learning-in-ios-cats-and-dogs-c5f5faec87f2)
