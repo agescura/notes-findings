@@ -180,3 +180,37 @@ let worldHelloString = NSMutableAttributedString()
 ```
 
 Con este patrón, estamos generando múltiples construcciones posibles de una forma sencilla y elegante.
+
+### Factory Method
+
+* Define una interfaz para crear un objeto, pero deja que sean las subclases quienes decidan qué clase instanciar. Permite que una clase delegue en sus subclases la creación de objetos.
+
+ ```swift
+let factory = Factory()
+let product1 = factory.createProduct1()
+let product2 = factory.createProduct2()
+```
+
+ ```swift
+protocol FactoryProtocol {
+    func createProduct() -> ProductProtocol
+}
+
+class Factory: FactoryProtocol {
+
+    func createProduct() -> ProductProtocol {
+        Product()
+    }
+}
+
+protocol ProductProtocol {}
+
+class Product: ProductProtocol {}
+
+let factory = Factory()
+let product = factory.createProduct()
+```
+
+### Prototype
+
+Especifica los tipos de objetos a crear por medio de una instancia, y crea nuevos objetos copiando dicho prototipo.
