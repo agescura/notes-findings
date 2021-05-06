@@ -165,3 +165,60 @@ extension Array {
 }
 
 ```swift
+
+Con Reduce, podemos crear una nueva versión de map
+
+```swift
+extension Array {
+    
+    func map<T>(_ transform: (Element) -> T) -> [T] {
+        reduce([]) {
+            $0 + [transform($1)]
+        }
+    }
+    
+    func filter(_ isIncluded: (Element) -> Bool) -> [Element] {
+        reduce([]) {
+            isIncluded($1) ? $0 + [$1] : $0
+        }
+    }
+}
+```swift
+
+Cuando usamos inout, el compilador no tiene que crear un nuevo array cada vez.
+
+```swift
+extension Array {
+    func filter(_ isIncluded: (Element) -> Bool) -> [Element] {
+        reduce(into: []) { (result, element) in
+            if isIncluded(element) {
+                result.append(element)
+            }
+        }
+    }
+}
+```swift
+
+### A Flattening Map
+
+Con flatMap podemos combinar elementos de diferentes sources.
+
+extension Array {
+    
+    func flatMap<T>(_ transform: (Element) -> [T]) -> [T] {
+        var result: [T] = []
+        for x in self {
+            result.append(contentsOf: transform(x))
+        }
+        return result
+    }
+}
+
+let suits = ["1", "2", "3", "4"]
+let ranks = ["a", "b", "c", "d"]
+
+suits.flatMap { suit in
+    ranks.map { rank in
+        (suit, rank)
+    }
+}
