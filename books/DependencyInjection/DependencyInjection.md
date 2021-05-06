@@ -210,3 +210,11 @@ let valediction = Valediction(writer: writer)
 * What happens if we want to change the data access layer? UI has a direct dependency on the data acces layer.
 
 ## Writing loosely coupled code
+
+## Chapter 4 DI Patterns
+
+* Composing object graphs with Composition Root
+* Statically declaring required Dependencies with Constructor Injection
+* Passing Dependencies outside the Composition Root with Method Injection
+* Declaring optional Dependencies with Property Injection
+* Understanding which pattern to use
