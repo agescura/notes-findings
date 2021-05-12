@@ -222,3 +222,6 @@ suits.flatMap { suit in
         (suit, rank)
     }
 }
+
+## Dictionaries
+
