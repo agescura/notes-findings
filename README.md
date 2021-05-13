@@ -13,5 +13,5 @@ Summary of books and articles read and other interesting resources
 
 ## Own self
 * [Machine Learning in iOS: Cats and Dogs](https://agilescura.medium.com/machine-learning-in-ios-cats-and-dogs-c5f5faec87f2)
-* [The Composable Architecture](https://agilescura.medium.com/the-composable-architecture-9026c33ae1b7)
+* [The Composable Architecture](medium/EcommerceComposableArchitecture-Part-1)
 * [SwiftUI Notes](SwiftUI.md)
