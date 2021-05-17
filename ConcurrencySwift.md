@@ -233,3 +233,6 @@ queue.addOperation(op)
 
 Hasta el momento, las operaciones son síncronas.
 Las operaciones usan las notificaciones KVO
+
+## Operation Dependencies
+

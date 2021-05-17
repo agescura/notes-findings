@@ -41,16 +41,6 @@ struct ContentView: View {
     }
 }
 
-
-
-
-
-
-
-
-
-
-
 struct AppState: Equatable {
     var products: [Product] = []
 }
