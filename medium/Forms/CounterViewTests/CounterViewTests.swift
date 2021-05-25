@@ -1,14 +1,14 @@
 //
-//  ApuntesDeClaseTests.swift
-//  ApuntesDeClaseTests
+//  CounterViewTests.swift
+//  CounterViewTests
 //
-//  Created by Albert Gil Escura on 17/5/21.
+//  Created by Albert Gil Escura on 25/5/21.
 //
 
 import XCTest
-@testable import ApuntesDeClase
+@testable import CounterView
 
-class ApuntesDeClaseTests: XCTestCase {
+class CounterViewTests: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
