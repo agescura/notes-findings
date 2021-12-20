@@ -85,6 +85,34 @@ class AlarmsListViewController: UIViewController {
                 dataSource.apply(snapshot, animatingDifferences: true)
             }
             .store(in: &self.cancellables)
+        
+        var presentedViewController: UIViewController?
+        
+        self.viewModel.$route
+            .removeDuplicates()
+            .sink { route in
+                switch route {
+                case .none:
+                    guard let vc = presentedViewController else { return }
+                    vc.dismiss(animated: true)
+                    presentedViewController = nil
+                case let .deleteAlert(item):
+                    let alert = UIAlertController(
+                        title: item.name,
+                        message: "Are you sure you want to delete this alarm?",
+                        preferredStyle: .alert
+                    )
+                    alert.addAction(.init(title: "Cancel", style: .cancel, handler: { _ in
+                        self.viewModel.cancelButtonTapped()
+                    }))
+                    alert.addAction(.init(title: "Delete", style: .destructive, handler: { _ in
+                        self.viewModel.delete(item)
+                    }))
+                    self.present(alert, animated: true)
+                    presentedViewController = alert
+                }
+            }
+            .store(in: &self.cancellables)
     }
 }
 
@@ -93,6 +121,17 @@ extension AlarmsListViewController: UITableViewDelegate {
         guard self.viewModel.items.count > indexPath.row else { return }
         let item = self.viewModel.items[indexPath.row]
         self.viewModel.toggle(alarm: item)
+    }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let deleteAction = UIContextualAction(
+            style: .destructive,
+            title: "Remove"
+        ) { action, view, completion in
+            self.viewModel.deleteButtonTapped(at: indexPath.row)
+            completion(true)
+        }
+        return UISwipeActionsConfiguration(actions: [deleteAction])
     }
 }
 
