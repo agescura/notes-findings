@@ -14,8 +14,13 @@ enum Tab: String {
 
 class TabBarViewModel: ObservableObject {
     @Published var selectedTab: Tab
+    @Published var alarmsListViewModel: AlarmsListViewModel
     
-    init(selectedTab: Tab) {
+    init(
+        selectedTab: Tab,
+        alarmsListViewModel: AlarmsListViewModel
+    ) {
         self.selectedTab = selectedTab
+        self.alarmsListViewModel = alarmsListViewModel
     }
 }

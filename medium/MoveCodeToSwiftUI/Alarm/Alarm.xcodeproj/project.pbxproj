@@ -20,6 +20,10 @@
 		95CBA75A276F5D8D000FE6DA /* TabBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95CBA759276F5D8D000FE6DA /* TabBarViewModel.swift */; };
 		95CBA75C276F5E08000FE6DA /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95CBA75B276F5E08000FE6DA /* MainView.swift */; };
 		95CBA75E276F5EED000FE6DA /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95CBA75D276F5EED000FE6DA /* MainViewModel.swift */; };
+		95FFA5CA2770DF6C00C2A951 /* AlarmsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95FFA5C92770DF6C00C2A951 /* AlarmsListViewController.swift */; };
+		95FFA5CC2770DF9C00C2A951 /* AlarmsListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95FFA5CB2770DF9C00C2A951 /* AlarmsListViewModel.swift */; };
+		95FFA5CE2770E00000C2A951 /* AlarmItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95FFA5CD2770E00000C2A951 /* AlarmItemCell.swift */; };
+		95FFA5D02770E24600C2A951 /* AlarmsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95FFA5CF2770E24600C2A951 /* AlarmsListView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +61,10 @@
 		95CBA759276F5D8D000FE6DA /* TabBarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewModel.swift; sourceTree = "<group>"; };
 		95CBA75B276F5E08000FE6DA /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		95CBA75D276F5EED000FE6DA /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
+		95FFA5C92770DF6C00C2A951 /* AlarmsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmsListViewController.swift; sourceTree = "<group>"; };
+		95FFA5CB2770DF9C00C2A951 /* AlarmsListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmsListViewModel.swift; sourceTree = "<group>"; };
+		95FFA5CD2770E00000C2A951 /* AlarmItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmItemCell.swift; sourceTree = "<group>"; };
+		95FFA5CF2770E24600C2A951 /* AlarmsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmsListView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -149,6 +157,8 @@
 				95CBA759276F5D8D000FE6DA /* TabBarViewModel.swift */,
 				95CBA75B276F5E08000FE6DA /* MainView.swift */,
 				95CBA75D276F5EED000FE6DA /* MainViewModel.swift */,
+				95FFA5CF2770E24600C2A951 /* AlarmsListView.swift */,
+				95FFA5CB2770DF9C00C2A951 /* AlarmsListViewModel.swift */,
 			);
 			path = SwiftUI;
 			sourceTree = "<group>";
@@ -157,6 +167,8 @@
 			isa = PBXGroup;
 			children = (
 				95CBA755276F5CFA000FE6DA /* TabBarViewController.swift */,
+				95FFA5C92770DF6C00C2A951 /* AlarmsListViewController.swift */,
+				95FFA5CD2770E00000C2A951 /* AlarmItemCell.swift */,
 			);
 			path = UIKit;
 			sourceTree = "<group>";
@@ -311,11 +323,15 @@
 			files = (
 				95CBA756276F5CFA000FE6DA /* TabBarViewController.swift in Sources */,
 				95CBA75C276F5E08000FE6DA /* MainView.swift in Sources */,
+				95FFA5CE2770E00000C2A951 /* AlarmItemCell.swift in Sources */,
 				95CBA72C276F5CA4000FE6DA /* ContentView.swift in Sources */,
+				95FFA5CA2770DF6C00C2A951 /* AlarmsListViewController.swift in Sources */,
+				95FFA5CC2770DF9C00C2A951 /* AlarmsListViewModel.swift in Sources */,
 				95CBA72A276F5CA4000FE6DA /* AlarmApp.swift in Sources */,
 				95CBA758276F5D43000FE6DA /* TabBarView.swift in Sources */,
 				95CBA75A276F5D8D000FE6DA /* TabBarViewModel.swift in Sources */,
 				95CBA754276F5CD8000FE6DA /* SwiftUIWrapper.swift in Sources */,
+				95FFA5D02770E24600C2A951 /* AlarmsListView.swift in Sources */,
 				95CBA75E276F5EED000FE6DA /* MainViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

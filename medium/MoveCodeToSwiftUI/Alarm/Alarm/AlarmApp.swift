@@ -14,7 +14,16 @@ struct AlarmApp: App {
             MainView(
                 viewModel: .init(
                     isSwiftUI: true,
-                    tabBarViewModel: .init(selectedTab: .alarms)
+                    tabBarViewModel: .init(
+                        selectedTab: .alarms,
+                        alarmsListViewModel: .init(
+                            items: [
+                                .init(id: .init(), date: .init(), isOn: false),
+                                .init(id: .init(), date: .init(), isOn: true),
+                                .init(id: .init(), date: .init(), isOn: false)
+                            ]
+                        )
+                    )
                 )
             )
         }

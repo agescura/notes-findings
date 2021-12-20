@@ -30,13 +30,11 @@ class TabBarViewController: UITabBarController {
         clock.view.addSubview(clockLabel)
         clockLabel.center = clock.view.center
         
-        let alarmsLabel = UILabel()
-        alarmsLabel.text = "Alarms"
-        alarmsLabel.sizeToFit()
-        let alarms = UIViewController()
-        alarms.tabBarItem.title = "Alarms"
-        alarms.view.addSubview(alarmsLabel)
-        alarmsLabel.center = alarms.view.center
+        let alarms = AlarmsListViewController(
+          viewModel: self.viewModel.alarmsListViewModel
+        )
+        let navigationAlarms = UINavigationController(rootViewController: alarms)
+        navigationAlarms.tabBarItem.title = "Alarms"
         
         let cronoLabel = UILabel()
         cronoLabel.text = "Crono"
@@ -46,7 +44,7 @@ class TabBarViewController: UITabBarController {
         crono.view.addSubview(cronoLabel)
         cronoLabel.center = crono.view.center
         
-        self.setViewControllers([clock, alarms, crono], animated: false)
+        self.setViewControllers([clock, navigationAlarms, crono], animated: false)
         
         self.viewModel.$selectedTab
             .sink { [unowned self] tab in
@@ -81,11 +79,15 @@ class TabBarViewController: UITabBarController {
 }
 
 import SwiftUI
+
 struct TabBarViewController_Previews: PreviewProvider {
     static var previews: some View {
         SwiftUIWrapper {
             TabBarViewController(
-                viewModel: .init(selectedTab: .alarms)
+                viewModel: .init(
+                    selectedTab: .alarms,
+                    alarmsListViewModel: .init()
+                )
             )
         }
     }

@@ -18,9 +18,10 @@ struct TabBarView: View {
                 .tabItem { Text("Clock") }
                 .tag(Tab.clock)
             
-            Text("Alarms")
+            AlarmsListView(viewModel: self.viewModel.alarmsListViewModel)
                 .tabItem { Text("Alarms") }
                 .tag(Tab.alarms)
+            
             Text("Crono")
                 .tabItem { Text("Crono") }
                 .tag(Tab.crono)
@@ -32,7 +33,8 @@ struct TabBarView_Previews: PreviewProvider {
     static var previews: some View {
         TabBarView(
             viewModel: .init(
-                selectedTab: .alarms
+                selectedTab: .alarms,
+                alarmsListViewModel: .init()
             )
         )
     }

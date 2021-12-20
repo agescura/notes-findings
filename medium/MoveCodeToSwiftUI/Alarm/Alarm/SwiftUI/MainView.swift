@@ -34,7 +34,10 @@ struct MainView_Previews: PreviewProvider {
         MainView(
             viewModel: .init(
                 isSwiftUI: true,
-                tabBarViewModel: .init(selectedTab: .alarms)
+                tabBarViewModel: .init(
+                    selectedTab: .alarms,
+                    alarmsListViewModel: .init()
+                )
             )
         )
     }
