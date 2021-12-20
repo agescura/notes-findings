@@ -31,6 +31,32 @@ class MainViewModel: ObservableObject {
             self.tabBarViewModel.selectedTab = tab
         }
         
+        // deeplink:///alarms/add?isOn=true&date=2015-01-01T00:00:00.000Z
+        
+        if components.count == 3 {
+            guard let tab = Tab(rawValue: components[1]) else { return }
+            self.tabBarViewModel.selectedTab = tab
+            
+            var date = Date()
+            var isOn = false
+            
+            if components.last == "add" {
+                if let params = URLComponents(string: url.absoluteString)?.queryItems {
+                    if let paramIsOn = params.first(where: { $0.name == "isOn"})?.value {
+                        if paramIsOn.lowercased() == "true" {
+                            isOn = true
+                        }
+                    }
+                    if let paramDate = params.first(where: { $0.name == "date"})?.value {
+                        let formatter = DateFormatter()
+                        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"
+                        date = formatter.date(from: paramDate) ?? Date()
+                    }
+                }
+                self.tabBarViewModel.alarmsListViewModel.route = .add(.init(alarmItem: .init(id: .init(), date: date, isOn: isOn)))
+            }
+        }
+        
         // deeplink:///alarms/:id/delete
         
         if components.count == 4 {

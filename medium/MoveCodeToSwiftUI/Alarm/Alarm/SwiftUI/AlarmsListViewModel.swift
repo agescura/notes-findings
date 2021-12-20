@@ -19,18 +19,25 @@ class AlarmsListViewModel: ObservableObject {
     
     enum Route: Equatable, Identifiable {
         case deleteAlert(AlarmItem)
+        case add(AlarmItemViewModel)
         
         var id: UUID {
             switch self {
             case let .deleteAlert(item):
+                return item.id
+            case let .add(item):
                 return item.id
             }
         }
         
         static func == (lhs: Self, rhs: Self) -> Bool {
             switch (lhs, rhs) {
+            case let (.add(lhs), .add(rhs)):
+                return lhs === rhs
             case let (.deleteAlert(lhs), .deleteAlert(rhs)):
                 return lhs == rhs
+            case (.add, .deleteAlert), (.deleteAlert, .add):
+                return false
             }
         }
     }
@@ -60,6 +67,15 @@ class AlarmsListViewModel: ObservableObject {
     func delete(_ item: AlarmItem) {
         guard let index = self.items.firstIndex(where: { $0.id == item.id }) else { return }
         self.items.remove(at: index)
+    }
+    
+    func add(item: AlarmItem) {
+        self.items.append(item)
+        self.route = nil
+    }
+    
+    func addButtonTapped() {
+        self.route = .add(.init(alarmItem: .init(id: .init(), date: .init(), isOn: true)))
     }
 }
 

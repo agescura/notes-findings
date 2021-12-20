@@ -18,9 +18,11 @@ struct TabBarView: View {
                 .tabItem { Text("Clock") }
                 .tag(Tab.clock)
             
-            AlarmsListView(viewModel: self.viewModel.alarmsListViewModel)
-                .tabItem { Text("Alarms") }
-                .tag(Tab.alarms)
+            NavigationView {
+                AlarmsListView(viewModel: self.viewModel.alarmsListViewModel)
+            }
+            .tabItem { Text("Alarms") }
+            .tag(Tab.alarms)
             
             Text("Crono")
                 .tabItem { Text("Crono") }

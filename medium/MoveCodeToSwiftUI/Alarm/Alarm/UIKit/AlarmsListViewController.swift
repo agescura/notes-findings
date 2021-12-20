@@ -38,6 +38,12 @@ class AlarmsListViewController: UIViewController {
         super.viewDidLoad()
         
         self.title = "Alarms"
+        self.navigationItem.rightBarButtonItem = .init(
+            title: "Add",
+            primaryAction: .init { [unowned self] _ in
+                self.viewModel.addButtonTapped()
+            }
+        )
         
         enum Section { case one }
         
@@ -110,6 +116,24 @@ class AlarmsListViewController: UIViewController {
                     }))
                     self.present(alert, animated: true)
                     presentedViewController = alert
+                case let .add(viewModel):
+                    let vc = AlarmItemViewController(viewModel: viewModel)
+                    let nc = UINavigationController(rootViewController: vc)
+                    vc.title = "Add Alarm"
+                    vc.navigationItem.leftBarButtonItem = .init(
+                        title: "Cancel",
+                        primaryAction: .init { [unowned self] _ in
+                            self.viewModel.cancelButtonTapped()
+                        }
+                    )
+                    vc.navigationItem.rightBarButtonItem = .init(
+                        title: "Add",
+                        primaryAction: .init { [unowned self] _ in
+                            self.viewModel.add(item: vc.viewModel.alarmItem)
+                        }
+                    )
+                    self.present(nc, animated: true)
+                    presentedViewController = nc
                 }
             }
             .store(in: &self.cancellables)
