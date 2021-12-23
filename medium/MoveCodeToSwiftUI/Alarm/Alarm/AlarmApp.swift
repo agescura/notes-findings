@@ -18,9 +18,9 @@ struct AlarmApp: App {
                         selectedTab: .alarms,
                         alarmsListViewModel: .init(
                             items: [
-                                .init(id: .init(), date: .init(), isOn: false),
-                                .init(id: .init(), date: .init(), isOn: true),
-                                .init(id: .init(), date: .init(), isOn: false)
+                                .init(item: .init(id: .init(), date: .init(), isOn: false)),
+                                .init(item: .init(id: .init(), date: .init(), isOn: true)),
+                                .init(item: .init(id: .init(), date: .init(), isOn: false)),
                             ]
                         )
                     )

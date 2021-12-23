@@ -47,7 +47,7 @@ class AlarmsListViewController: UIViewController {
         
         enum Section { case one }
         
-        let dataSource = UITableViewDiffableDataSource<Section, AlarmItem>(
+        let dataSource = UITableViewDiffableDataSource<Section, AlarmItemRowViewModel>(
             tableView: tableView,
             cellProvider: { tableView, indexPath, item in
                 guard let cell = tableView.dequeueReusableCell(
@@ -56,7 +56,7 @@ class AlarmsListViewController: UIViewController {
                 ) as? AlarmItemCell else {
                     return UITableViewCell(frame: .zero)
                 }
-                cell.bind(viewModel: item)
+                cell.bind(viewModel: item, context: self)
                 cell.contentView.backgroundColor = indexPath.row % 2 == 0 ? .white : .black.withAlphaComponent(0.05)
                 return cell
             }
@@ -85,7 +85,7 @@ class AlarmsListViewController: UIViewController {
         
         self.viewModel.$items
             .sink { items in
-                var snapshot = NSDiffableDataSourceSnapshot<Section, AlarmItem>()
+                var snapshot = NSDiffableDataSourceSnapshot<Section, AlarmItemRowViewModel>()
                 snapshot.appendSections([.one])
                 snapshot.appendItems(items, toSection: .one)
                 dataSource.apply(snapshot, animatingDifferences: true)
@@ -102,20 +102,6 @@ class AlarmsListViewController: UIViewController {
                     guard let vc = presentedViewController else { return }
                     vc.dismiss(animated: true)
                     presentedViewController = nil
-                case let .deleteAlert(item):
-                    let alert = UIAlertController(
-                        title: item.name,
-                        message: "Are you sure you want to delete this alarm?",
-                        preferredStyle: .alert
-                    )
-                    alert.addAction(.init(title: "Cancel", style: .cancel, handler: { _ in
-                        self.viewModel.cancelButtonTapped()
-                    }))
-                    alert.addAction(.init(title: "Delete", style: .destructive, handler: { _ in
-                        self.viewModel.delete(item)
-                    }))
-                    self.present(alert, animated: true)
-                    presentedViewController = alert
                 case let .add(viewModel):
                     let vc = AlarmItemViewController(viewModel: viewModel)
                     let nc = UINavigationController(rootViewController: vc)
@@ -134,6 +120,8 @@ class AlarmsListViewController: UIViewController {
                     )
                     self.present(nc, animated: true)
                     presentedViewController = nc
+                case .items:
+                    break
                 }
             }
             .store(in: &self.cancellables)
@@ -141,10 +129,16 @@ class AlarmsListViewController: UIViewController {
 }
 
 extension AlarmsListViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard self.viewModel.items.count > indexPath.row else { return }
-        let item = self.viewModel.items[indexPath.row]
-        self.viewModel.toggle(alarm: item)
+    
+    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let toggleAction = UIContextualAction(
+            style: .normal,
+            title: self.viewModel.items[indexPath.row].item.status
+        ) { action, view, completion in
+            self.viewModel.items[indexPath.row].toggleButtonTapped()
+            completion(true)
+        }
+        return UISwipeActionsConfiguration(actions: [toggleAction])
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
@@ -152,7 +146,7 @@ extension AlarmsListViewController: UITableViewDelegate {
             style: .destructive,
             title: "Remove"
         ) { action, view, completion in
-            self.viewModel.deleteButtonTapped(at: indexPath.row)
+            self.viewModel.items[indexPath.row].deleteButtonTapped()
             completion(true)
         }
         return UISwipeActionsConfiguration(actions: [deleteAction])
@@ -168,9 +162,9 @@ struct AlarmsListViewController_Previews: PreviewProvider {
                 rootViewController: AlarmsListViewController(
                     viewModel: .init(
                         items: [
-                            .init(id: .init(), date: .init(), isOn: false),
-                            .init(id: .init(), date: .init(), isOn: true),
-                            .init(id: .init(), date: .init(), isOn: false)
+                            .init(item: .init(id: .init(), date: .init(), isOn: false)),
+                            .init(item: .init(id: .init(), date: .init(), isOn: true)),
+                            .init(item: .init(id: .init(), date: .init(), isOn: false)),
                         ]
                     )
                 )

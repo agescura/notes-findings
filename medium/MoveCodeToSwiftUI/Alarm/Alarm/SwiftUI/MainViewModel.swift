@@ -57,18 +57,25 @@ class MainViewModel: ObservableObject {
             }
         }
         
-        // deeplink:///alarms/:id/delete
-        
         if components.count == 4 {
             guard let tab = Tab(rawValue: components[1]) else { return }
             self.tabBarViewModel.selectedTab = tab
             
+            let uuid = components[2]
+            guard let item = self.tabBarViewModel.alarmsListViewModel.items.first(where: { $0.id.uuidString == uuid }) else { return }
+            
+            // deeplink:///alarms/:id/delete
+            
             if components.last == "delete" {
-                let uuid = components[2]
-                guard let item = self.tabBarViewModel.alarmsListViewModel.items.first(where: { $0.id.uuidString == uuid }) else { return }
-                
-                self.tabBarViewModel.alarmsListViewModel.route = .deleteAlert(item)
+                self.tabBarViewModel.alarmsListViewModel.route = .items(id: item.id, route: .deleteAlert)
+            }
+            
+            // deeplink:///alarms/:id/toggle
+            
+            if components.last == "toggle" {
+                self.tabBarViewModel.alarmsListViewModel.route = .items(id: item.id, route: .toggleConfirmationDialog)
             }
         }
     }
 }
+

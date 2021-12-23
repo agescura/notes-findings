@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 
 extension AlarmItem {
     var name: String {
@@ -21,6 +22,13 @@ extension AlarmItem {
 }
 
 class AlarmItemCell: UITableViewCell {
+    var cancellables: Set<AnyCancellable> = []
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        self.cancellables = []
+    }
+    
     let nameLabel = UILabel()
     let descriptionLabel = UILabel()
     let activateLabel = UILabel()
@@ -39,21 +47,42 @@ class AlarmItemCell: UITableViewCell {
         return stackView
     }()
     
-    func bind(viewModel: AlarmItem) {
+    func bind(viewModel: AlarmItemRowViewModel, context: UIViewController) {
         selectionStyle = .none
-        nameLabel.text = viewModel.name
-        nameLabel.textColor = viewModel.isOn ? .black : .black.withAlphaComponent(0.5)
+        
+        viewModel.$item
+            .map(\.name)
+            .removeDuplicates()
+            .sink { [unowned self] name in
+                self.nameLabel.text = name
+            }
+            .store(in: &self.cancellables)
+        viewModel.$item
+            .map(\.description)
+            .removeDuplicates()
+            .sink { [unowned self] description in
+                self.descriptionLabel.text = description
+            }
+            .store(in: &self.cancellables)
+        viewModel.$item
+            .map(\.isOn)
+            .removeDuplicates()
+            .sink { [unowned self] isOn in
+                self.nameLabel.textColor = isOn ? .black : .black.withAlphaComponent(0.5)
+                self.descriptionLabel.textColor = isOn ? .black : .black.withAlphaComponent(0.5)
+                self.activateLabel.text = isOn ? "" : "Disabled"
+                self.activateLabel.textColor = isOn ? .black : .black.withAlphaComponent(0.5)
+            }
+            .store(in: &self.cancellables)
+        
         descriptionLabel.font = .systemFont(ofSize: 14)
-        descriptionLabel.text = viewModel.description
-        descriptionLabel.textColor = viewModel.isOn ? .black : .black.withAlphaComponent(0.5)
         verticalStackView.addArrangedSubview(nameLabel)
         verticalStackView.addArrangedSubview(descriptionLabel)
-        
-        activateLabel.text = viewModel.isOn ? "" : "Disabled"
-        activateLabel.textColor = viewModel.isOn ? .black : .black.withAlphaComponent(0.5)
         stackView.addArrangedSubview(verticalStackView)
         stackView.addArrangedSubview(activateLabel)
+        
         self.contentView.addSubview(stackView)
+        
         NSLayoutConstraint.activate([
             activateLabel.widthAnchor.constraint(equalToConstant: 100),
             stackView.topAnchor.constraint(
@@ -71,5 +100,47 @@ class AlarmItemCell: UITableViewCell {
                 constant: 16
             )
         ])
+        
+        var presentedViewController: UIViewController?
+        
+        viewModel.$route
+            .removeDuplicates()
+            .sink { route in
+                switch route {
+                case .none:
+                    guard let vc = presentedViewController else { return }
+                    vc.dismiss(animated: true)
+                    presentedViewController = nil
+                case .deleteAlert:
+                    let alert = UIAlertController(
+                        title: viewModel.item.name,
+                        message: "Are you sure you want to delete this item?",
+                        preferredStyle: .alert
+                    )
+                    alert.addAction(.init(title: "Cancel", style: .cancel, handler: { _ in
+                        viewModel.cancelButtonTapped()
+                    }))
+                    alert.addAction(.init(title: "Delete", style: .destructive, handler: { _ in
+                        viewModel.deleteConfirmationButtonTapped()
+                    }))
+                    context.present(alert, animated: true)
+                    presentedViewController = alert
+                case .toggleConfirmationDialog:
+                    let alert = UIAlertController(
+                        title: viewModel.item.name,
+                        message: viewModel.item.description,
+                        preferredStyle: .actionSheet
+                    )
+                    alert.addAction(.init(title: "Cancel", style: .cancel, handler: { _ in
+                        viewModel.toggleButtonTapped()
+                    }))
+                    alert.addAction(.init(title: viewModel.item.status, style: .default, handler: { _ in
+                        viewModel.toggleConfirmationButtonTapped()
+                    }))
+                    context.present(alert, animated: true)
+                    presentedViewController = alert
+                }
+            }
+            .store(in: &self.cancellables)
     }
 }

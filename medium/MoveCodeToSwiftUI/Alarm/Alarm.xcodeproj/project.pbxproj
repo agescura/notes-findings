@@ -20,6 +20,8 @@
 		95CBA75A276F5D8D000FE6DA /* TabBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95CBA759276F5D8D000FE6DA /* TabBarViewModel.swift */; };
 		95CBA75C276F5E08000FE6DA /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95CBA75B276F5E08000FE6DA /* MainView.swift */; };
 		95CBA75E276F5EED000FE6DA /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95CBA75D276F5EED000FE6DA /* MainViewModel.swift */; };
+		95D89A402774DB8700779991 /* AlarmItemRowViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95D89A3F2774DB8700779991 /* AlarmItemRowViewModel.swift */; };
+		95D89A422774E0A500779991 /* AlarmItemRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95D89A412774E0A500779991 /* AlarmItemRowView.swift */; };
 		95FCD4522771228900520030 /* AlarmItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95FCD4512771228900520030 /* AlarmItemView.swift */; };
 		95FFA5CA2770DF6C00C2A951 /* AlarmsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95FFA5C92770DF6C00C2A951 /* AlarmsListViewController.swift */; };
 		95FFA5CC2770DF9C00C2A951 /* AlarmsListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95FFA5CB2770DF9C00C2A951 /* AlarmsListViewModel.swift */; };
@@ -64,6 +66,8 @@
 		95CBA759276F5D8D000FE6DA /* TabBarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewModel.swift; sourceTree = "<group>"; };
 		95CBA75B276F5E08000FE6DA /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		95CBA75D276F5EED000FE6DA /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
+		95D89A3F2774DB8700779991 /* AlarmItemRowViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmItemRowViewModel.swift; sourceTree = "<group>"; };
+		95D89A412774E0A500779991 /* AlarmItemRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmItemRowView.swift; sourceTree = "<group>"; };
 		95FCD4512771228900520030 /* AlarmItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmItemView.swift; sourceTree = "<group>"; };
 		95FFA5C92770DF6C00C2A951 /* AlarmsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmsListViewController.swift; sourceTree = "<group>"; };
 		95FFA5CB2770DF9C00C2A951 /* AlarmsListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmsListViewModel.swift; sourceTree = "<group>"; };
@@ -167,6 +171,8 @@
 				95FFA5CB2770DF9C00C2A951 /* AlarmsListViewModel.swift */,
 				95FFA5D32771191000C2A951 /* AlarmItemViewModel.swift */,
 				95FCD4512771228900520030 /* AlarmItemView.swift */,
+				95D89A3F2774DB8700779991 /* AlarmItemRowViewModel.swift */,
+				95D89A412774E0A500779991 /* AlarmItemRowView.swift */,
 			);
 			path = SwiftUI;
 			sourceTree = "<group>";
@@ -336,8 +342,10 @@
 				95CBA72C276F5CA4000FE6DA /* ContentView.swift in Sources */,
 				95FFA5CA2770DF6C00C2A951 /* AlarmsListViewController.swift in Sources */,
 				95FFA5CC2770DF9C00C2A951 /* AlarmsListViewModel.swift in Sources */,
+				95D89A402774DB8700779991 /* AlarmItemRowViewModel.swift in Sources */,
 				95CBA72A276F5CA4000FE6DA /* AlarmApp.swift in Sources */,
 				95CBA758276F5D43000FE6DA /* TabBarView.swift in Sources */,
+				95D89A422774E0A500779991 /* AlarmItemRowView.swift in Sources */,
 				95CBA75A276F5D8D000FE6DA /* TabBarViewModel.swift in Sources */,
 				95CBA754276F5CD8000FE6DA /* SwiftUIWrapper.swift in Sources */,
 				95FFA5D02770E24600C2A951 /* AlarmsListView.swift in Sources */,
