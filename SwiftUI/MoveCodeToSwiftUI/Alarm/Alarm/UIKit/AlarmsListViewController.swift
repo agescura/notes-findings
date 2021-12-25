@@ -130,6 +130,10 @@ class AlarmsListViewController: UIViewController {
 
 extension AlarmsListViewController: UITableViewDelegate {
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.viewModel.items[indexPath.row].setEditNavigation(isActive: true)
+    }
+    
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let toggleAction = UIContextualAction(
             style: .normal,

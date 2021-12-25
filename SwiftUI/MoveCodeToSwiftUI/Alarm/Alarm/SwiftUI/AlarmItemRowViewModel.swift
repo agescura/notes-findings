@@ -30,6 +30,7 @@ class AlarmItemRowViewModel: ObservableObject, Hashable, Equatable, Identifiable
     enum Route: Equatable {
         case deleteAlert
         case toggleConfirmationDialog
+        case edit(AlarmItemViewModel)
         
         static func == (lhs: Self, rhs: Self) -> Bool {
             switch (lhs, rhs) {
@@ -37,7 +38,9 @@ class AlarmItemRowViewModel: ObservableObject, Hashable, Equatable, Identifiable
                 return true
             case (.toggleConfirmationDialog, .toggleConfirmationDialog):
                 return true
-            case (.deleteAlert, _), (.toggleConfirmationDialog, _):
+            case let (.edit(lhs), .edit(rhs)):
+                return lhs === rhs
+            case (.deleteAlert, _), (.toggleConfirmationDialog, _), (.edit, _):
                 return false
             }
         }
@@ -73,5 +76,14 @@ class AlarmItemRowViewModel: ObservableObject, Hashable, Equatable, Identifiable
     func toggleConfirmationButtonTapped() {
         self.onToggle()
         self.route = nil
+    }
+    
+    func edit(item: AlarmItem) {
+        self.item = item
+        self.route = nil
+    }
+    
+    func setEditNavigation(isActive: Bool) {
+        self.route = isActive ? .edit(.init(alarmItem: self.item)) : nil
     }
 }

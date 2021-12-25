@@ -139,6 +139,24 @@ class AlarmItemCell: UITableViewCell {
                     }))
                     context.present(alert, animated: true)
                     presentedViewController = alert
+                case let .edit(itemViewModel):
+                    let vc = AlarmItemViewController(viewModel: itemViewModel)
+                    vc.title = "Edit"
+                    vc.navigationItem.leftBarButtonItem = .init(
+                        title: "Cancel",
+                        primaryAction: .init { _ in
+                            viewModel.cancelButtonTapped()
+                        }
+                    )
+                    vc.navigationItem.rightBarButtonItem = .init(
+                        title: "Save",
+                        primaryAction: .init { _ in
+                            viewModel.edit(item: itemViewModel.alarmItem)
+                        }
+                    )
+                    context.show(vc, sender: nil)
+                    presentedViewController = vc
+                    break
                 }
             }
             .store(in: &self.cancellables)
